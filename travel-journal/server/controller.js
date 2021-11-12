@@ -1,5 +1,6 @@
 require("dotenv").config();
 
+const { INTEGER } = require("sequelize");
 const Sequelize = require("sequelize");
 
 const { CONNECTION_STRING } = process.env;
@@ -24,13 +25,25 @@ module.exports = {
                 name varchar
             );
 
+            CREATE TABLE cities (
+                city_id SERIAL PRIMARY KEY,
+                name VARCHAR,
+                rating INTEGER,
+                country_id INTEGER
+            
+            );
             getCountries: (req, res) => {
-                let {
-                    city_id,
-                    name,
-                    rating,
-                    country_id,
-                } = req.body;
+                sequelize
+                    .query(
+                        `
+                SELECT * FROM countries
+                )
+                    .then((dbRes) => res.status(200).send(dbRes[0]))
+                    .catch((err) => console.log(err));
+
+
+
+
 
             insert into countries (name)
             values ('Afghanistan'),
