@@ -24,7 +24,13 @@ module.exports = {
                 name varchar
             );
 
-            *****YOUR CODE HERE*****
+            getCountries: (req, res) => {
+                let {
+                    city_id,
+                    name,
+                    rating,
+                    country_id,
+                } = req.body;
 
             insert into countries (name)
             values ('Afghanistan'),
