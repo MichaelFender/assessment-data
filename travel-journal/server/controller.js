@@ -19,12 +19,12 @@ module.exports = {
             drop table if exists cities;
             drop table if exists countries;
 
-            create table countries (
+            CREATE TABLE countries (
                 country_id serial primary key, 
                 name varchar
             );
 
-            CREATE TABLE cities(
+            CREATE TABLE cities (
                 city_id SERIAL PRIMARY KEY,
                 name VARCHAR,
                 rating INTEGER,
@@ -32,14 +32,8 @@ module.exports = {
             );
 
 
+          
 
-                getUserInfo: (req, res) => {
-                
-                    select * countries
-                  
-                    .then((dbRes) => res.status(200).send(dbRes[0]))
-                    .catch((err) => console.log(err));
-            },            
 
             insert into countries (name)
             values ('Afghanistan'),
@@ -241,6 +235,7 @@ module.exports = {
             console.log('DB seeded!')
             res.sendStatus(200)
         }).catch(err => console.log('error seeding DB', err))
+
         
     },
 
@@ -251,12 +246,13 @@ module.exports = {
                 },
 
                 createCity: (req, res) => {
-                    const {name, rating, country_id} = req.body
+                    const {name, rating, countryId} = req.body
                     sequelize
-                        .query(`insert into createCity (name, rating, country_id)
-                        values (${name}, '${rating}', '${country_id}')
-                        returning *;`)
+                        .query(`INSERT into cities (name, rating, country_id)
+                        values ('${name}', '${rating}', '${countryId}')returning *;
+                        `)
                         .then((dbRes) => res.status(200).send(dbRes[0]))
+                        
                         .catch((err) => console.log(err));
                 },
 
@@ -265,24 +261,25 @@ module.exports = {
                     .query(
                         `
                 SELECT
-                cities.city_id, cities.name AS city, rating
-                countries.country_id, country.name AS country,  
-                FROM cities
-                INNER JOIN countries
-                        on cities.country_id = countries.country_id;
+                cit.city_id, cit.name city, cit.rating,
+                count.country_id, count.name country  
+                FROM cities cit
+                JOIN countries count
+                        on cit.country_id = count.country_id;
                 `
                     )
                     .then((dbRes) => res.status(200).send(dbRes[0]))
                     .catch((err) => console.log(err));
             },
 
-            delCities: (req, res) => {
-                const {city_id} = req.params
+            deleteCity: (req, res) => {
+                const city_id = req.params.id;
             sequelize
                     .query(
-                        `DROP city_id FROM cities
+                        `DELETE FROM CITIES where city_id = ${city_id}
                     ` )
                     .then((dbRes) => res.status(200).send(dbRes[0]))
                     .catch((err) => console.log(err));
-            }
+             }
+
 }
