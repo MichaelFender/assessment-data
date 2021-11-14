@@ -1,4 +1,5 @@
 require("dotenv").config();
+const threeCities = require('./db.json')
 
 const Sequelize = require("sequelize");
 
@@ -14,7 +15,7 @@ const sequelize = new Sequelize(CONNECTION_STRING, {
 });
 
 module.exports = {
-    seed: (req, res) => {
+    seed: (req, res) =>  {
         sequelize.query(`
             drop table if exists cities;
             drop table if exists countries;
@@ -30,7 +31,6 @@ module.exports = {
                 rating INTEGER,
                 country_id INTEGER
             );
-
 
           
 
@@ -233,7 +233,7 @@ module.exports = {
             ('Zimbabwe');
         `).then(() => {
             console.log('DB seeded!')
-            res.sendStatus(200)
+            res.sendStatus(200).send(threeCities)
         }).catch(err => console.log('error seeding DB', err))
 
         
@@ -265,9 +265,8 @@ module.exports = {
                 count.country_id, count.name country  
                 FROM cities cit
                 JOIN countries count
-                        on cit.country_id = count.country_id;
-                `
-                    )
+                        on cit.country_id = count.country_id
+                        order by cit.rating asc;`)
                     .then((dbRes) => res.status(200).send(dbRes[0]))
                     .catch((err) => console.log(err));
             },

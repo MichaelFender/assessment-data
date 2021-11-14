@@ -13,7 +13,7 @@ log_file = open("um-server-01.txt") #allows this .py to use the data in the .txt
 def over_ten(log_file):
     for line in log_file:
         line = line.rstrip()
-        orders = line[0:3]
-        if orders == 'Sat':
+        orders = line[16:2]
+        if orders > '10':
             print (line)
 over_ten(log_file)
