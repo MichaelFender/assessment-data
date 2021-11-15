@@ -1,5 +1,5 @@
 require("dotenv").config();
-const threeCities = require('./db.json')
+// const threeCities = require('./db.json')
 
 const Sequelize = require("sequelize");
 
@@ -233,7 +233,7 @@ module.exports = {
             ('Zimbabwe');
         `).then(() => {
             console.log('DB seeded!')
-            res.sendStatus(200).send(threeCities)
+            // res.sendStatus(200).send(threeCities)
         }).catch(err => console.log('error seeding DB', err))
 
         
