@@ -4,5 +4,17 @@
     "name": "Lafayette",
     "country": "Unites States of America",
     "rating" : "5/5"
+  },
+  {
+    "id": 2,
+    "name": "Paris",
+    "country": "France",
+    "rating" : "3/5"
+  },
+  {
+    "id": 3,
+    "name": "London",
+    "country": "England",
+    "rating" : "2/5"
   }
 ]
